@@ -2,8 +2,6 @@ import requests
 from huggingface_hub import InferenceClient
 
 def get_entities(text):
-    ner_model = InferenceClient(token="<your huggingface token>")
-    result = ner_model.token_classification(
     """
     Retrieves named entities from the given text using a pre-trained RoBERTa model for English named entity recognition.
 
@@ -13,6 +11,8 @@ def get_entities(text):
     Returns:
         List[str]: A list of named entities extracted from the input text. Each entity is a string without leading or trailing whitespace.
     """
+    ner_model = InferenceClient(token="<your huggingface token>")
+    result = ner_model.token_classification(
         text=text, model="jean-baptiste/roberta-large-ner-english"
     )
     return [i["word"].strip() for i in result]
@@ -52,4 +52,7 @@ def wiki_search(query: str):
 
     else:
         print("Failed to retrieve page content.")
+
+
+print(wiki_search("Lightning McQueen"))
 
